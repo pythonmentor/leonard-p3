@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ebbcc1d3-6253-4258-9514-f3e2315ed53b" name="Default Changelist" comment="" />
+    <list default="true" id="ebbcc1d3-6253-4258-9514-f3e2315ed53b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +17,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1YZQrhK9iJo9OB6afKnH0zWoTO7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -22,6 +29,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
   </component>
   <component name="RunManager">
@@ -54,5 +62,23 @@
   </component>
   <component name="SvnConfiguration">
     <configuration />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1236" height="197" key="GridCell.Tab.0.bottom" timestamp="1583151739707">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1236" height="197" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1583151739707" />
+    <state width="1236" height="197" key="GridCell.Tab.0.center" timestamp="1583151739705">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1236" height="197" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1583151739705" />
+    <state width="1236" height="197" key="GridCell.Tab.0.left" timestamp="1583151739705">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1236" height="197" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1583151739705" />
+    <state width="1236" height="197" key="GridCell.Tab.0.right" timestamp="1583151739706">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1236" height="197" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1583151739706" />
   </component>
 </project>
