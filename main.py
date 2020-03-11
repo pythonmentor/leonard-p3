@@ -1,22 +1,18 @@
-lab = []
-with open('map.txt', 'r') as file:
-    print(file)
-    for line in file:
-        l = list(line)
-        l = ['m' if x == ' ' else x for x in l]
-        l.remove('\n')
-        lab.append(l)
+LAB = []
 
-lab[1][5] = 'start'
-lab[13][5] = 'arrival'
-print(lab[1])
-print(lab[13])
 
-# lab[1][0] = 'm'
-# print(lab[1])
-# print(lab)
+def lab_surface():
+    """ Define lab structure """
+    with open('map.txt', 'r') as file:
+        for line in file:
+            a_list = list(line)
+            a_list.remove('\n')
+            LAB.append(a_list)
+            print(line.strip())
 
-# for char in lab:
-#     if char == ' ':
-#         lab[char] = 'm'
-# print(lab)
+
+lab_surface()
+
+
+class MacGyver:
+    """ class that define Mac Gyver character """
