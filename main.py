@@ -1,5 +1,19 @@
 # import os
-import random
+import random as r
+
+MACGYVER = 'M'
+TOOLS = [
+    'N',  # Needle
+    'T',  # Tube
+    'E'  # Ether
+]
+GUARDIAN = 'G'
+FIRST_LINE = 1
+# LINE = r.randrange(2, 13)
+
+# Labyrinth = List[List[str]]
+
+# Position = Tuple[int, int]
 
 
 def lab_surface(path):
@@ -12,6 +26,9 @@ def lab_surface(path):
             result = list(result)
             lab.append(result)
     return lab
+
+
+LABYRINTH = lab_surface('map.txt')
 
 
 def lab_printer(val):
@@ -28,11 +45,6 @@ def lab_printer(val):
     # r = '\n'.join(r)
 
 
-LABYRINTH = lab_surface('map.txt')
-MACGYVER = 'M'
-FIRST_LINE = 1
-
-
 def pick_random_start_position(lab, x):
     """
     Function that picks a random empty cell from a row in column index in LABYRINTH
@@ -41,10 +53,10 @@ def pick_random_start_position(lab, x):
     :return: int
     """
     possible_start_positions = []
-    for i, e in enumerate(lab[x]):
-        if e == ' ':
-            possible_start_positions.append(i)
-    picked_position = random.choice(possible_start_positions)
+    for index, element in enumerate(lab[x]):
+        if element == ' ':
+            possible_start_positions.append(index)
+    picked_position = r.choice(possible_start_positions)
     return picked_position
 
 
@@ -59,11 +71,40 @@ def set_start_position(x, y):
     LABYRINTH[x][y] = MACGYVER
 
 
-Y_POS = pick_random_start_position(LABYRINTH, FIRST_LINE)
-set_start_position(FIRST_LINE, Y_POS)
-lab_printer(LABYRINTH)
+def pick_random_tool_positions(lab):
+    """
+    Function that picks a random empty cell from a row in column index in LABYRINTH
+    :param lab: List[List[str]]
+    :return: Tuple[int, int]
+    """
+    possible_tool_positions = []
+    for x, line in enumerate(lab):
+        for y, element in enumerate(line):
+            if element == ' ':
+                possible_tool_positions.append((x, y))
+    picked_position = r.choice(possible_tool_positions)
+    return picked_position
+
+
+# def set_tool_positions(x, y):
+    # LABYRINTH[x][y] = TOOLS
+
+
+pick_random_tool_positions(LABYRINTH)
+
+
+Y_MAC_POS = pick_random_start_position(LABYRINTH, FIRST_LINE)
+set_start_position(FIRST_LINE, Y_MAC_POS)
+
+# Y_TOOLS_POS = pick_random_tool_position(LABYRINTH, LINE)
+# set_tools_position(LINE, Y_TOOLS_POS)
+
+# lab_printer(LABYRINTH)
+
+# def move():
 
 # start = lab.replace(randrange(len(lab[1])+1), MACGYVER)
+
 # print(start)
 
 
