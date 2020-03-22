@@ -6,10 +6,9 @@ TOOLS = [
     'N',  # Needle
     'T',  # Tube
     'E'  # Ether
-]
+     ]
 GUARDIAN = 'G'
 FIRST_LINE = 1
-# LINE = r.randrange(2, 13)
 
 # Labyrinth = List[List[str]]
 
@@ -19,7 +18,7 @@ FIRST_LINE = 1
 def lab_surface(path):
     """Function that defines labyrinth structure"""
     lab = []
-    with open(path, 'r') as file:
+    with open(path) as file:
         for line in file:
             result = line.replace('/', ' ')
             result = result.replace('\n', '')
@@ -31,6 +30,7 @@ def lab_surface(path):
 LABYRINTH = lab_surface('map.txt')
 
 
+# class CLI:
 def lab_printer(val):
     """
     Function that prints your labyrinth
@@ -45,30 +45,32 @@ def lab_printer(val):
     # r = '\n'.join(r)
 
 
-def pick_random_start_position(lab, x):
+def pick_random_position(lab, x):
     """
     Function that picks a random empty cell from a row in column index in LABYRINTH
     :param lab: List[List[str]]
     :param x: int
     :return: int
     """
-    possible_start_positions = []
+    possible_positions = []
     for index, element in enumerate(lab[x]):
         if element == ' ':
-            possible_start_positions.append(index)
-    picked_position = r.choice(possible_start_positions)
+            possible_positions.append(index)
+    picked_position = r.choice(possible_positions)
     return picked_position
 
 
-def set_start_position(x, y):
+def set_position(lab, x, y, character):
     """
-    Function that set Mac Gyver start position in the given empty cell
+    Function that set a character position in the given empty cell
     from 'pick_random_start_position' function
+    :param lab: List[List[str]]
     :param x: int
     :param y: int
+    :param character: str
     :return: None
     """
-    LABYRINTH[x][y] = MACGYVER
+    lab[x][y] = character
 
 
 def pick_random_tool_positions(lab):
@@ -86,20 +88,88 @@ def pick_random_tool_positions(lab):
     return picked_position
 
 
-# def set_tool_positions(x, y):
-    # LABYRINTH[x][y] = TOOLS
+def set_tool_positions(lab):
+    """
+    Function that sets tools positions in the labyrinth
+    :param lab: List[List[str]]
+    :return: None
+    """
+    for tool in TOOLS:
+        x, y = pick_random_tool_positions(lab)
+        lab[x][y] = tool
 
 
-pick_random_tool_positions(LABYRINTH)
+def get_macgyver_position(lab):
+    """
+    "Function that returns Mac Gyver position"
+    :param lab: List[List[str]]
+    :return: Tuple or None
+    """
+    for x, line in enumerate(lab):
+        for y, element in enumerate(line):
+            if element == MACGYVER:
+                return x, y
+    return None
 
 
-Y_MAC_POS = pick_random_start_position(LABYRINTH, FIRST_LINE)
-set_start_position(FIRST_LINE, Y_MAC_POS)
+def move_macgyver(lab):
+    """
+    Function that moves Mac Gyver in the labyrinth
+    :param lab: List[List[str]]
+    :return: List[List[str]]
+    """
+    direction = input("Select direction 'Z, Q, S or D' : ")
+    x, y = get_macgyver_position(lab)
+    if direction == 'Z' and (lab[x - 1][y] == ' ' or lab[x - 1][y] in TOOLS):
+        lab[x][y] = ' '
+        lab[x - 1][y] = MACGYVER
+    elif direction == 'Q' and (lab[x][y - 1] == ' ' or lab[x][y - 1] in TOOLS):
+        lab[x][y] = ' '
+        lab[x][y - 1] = MACGYVER
+    elif direction == 'S' and (lab[x + 1][y] == ' ' or lab[x + 1][y] in TOOLS):
+        lab[x][y] = ' '
+        lab[x + 1][y] = MACGYVER
+    elif direction == 'D' and (lab[x][y + 1] == ' ' or lab[x][y + 1] in TOOLS):
+        lab[x][y] = ' '
+        lab[x][y + 1] = MACGYVER
+    else:
+        print("Mac Gyver cannot go through walls !")
+    return lab
 
-# Y_TOOLS_POS = pick_random_tool_position(LABYRINTH, LINE)
-# set_tools_position(LINE, Y_TOOLS_POS)
 
-# lab_printer(LABYRINTH)
+# def win_game(x, y, lab):
+#     x, y = get_macgyver_position(lab)
+#     if TOOLS not in lab and lab[x-1][y] == GUARDIAN:
+#         print("Congratulations, you win!")
+#     elif TOOLS not in lab and lab[x][y - 1] == GUARDIAN:
+#         print("Congratulations, you win!")
+#         elif lab[x + 1][y] == GUARDIAN:
+#             print("Congratulations, you win!")
+#         elif lab[x][y + 1] == GUARDIAN:
+#             print("Congratulations, you win!")
+
+
+
+
+
+
+Y_MAC_POS = pick_random_position(LABYRINTH, FIRST_LINE)
+set_position(LABYRINTH, FIRST_LINE, Y_MAC_POS, MACGYVER)
+
+X_GUARDIAN_POS = len(LABYRINTH) - 2  # Second to last line
+Y_GUARDIAN_POS = pick_random_position(LABYRINTH, X_GUARDIAN_POS)
+set_position(LABYRINTH, X_GUARDIAN_POS, Y_GUARDIAN_POS, GUARDIAN)
+
+
+set_tool_positions(LABYRINTH)
+
+lab_printer(LABYRINTH)
+
+move_macgyver(LABYRINTH)
+
+lab_printer(LABYRINTH)
+
+
 
 # def move():
 
