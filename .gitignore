@@ -1,3 +1,5 @@
 .idea/
 venv/
 .pylintrc
+__pycache__/
+main_class.py
