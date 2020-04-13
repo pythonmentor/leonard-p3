@@ -1,3 +1,7 @@
+from labyrinth import *
+from constants import TOOLS
+
+
 class CLI:
     """Class that defines CLI init"""
 
@@ -20,8 +24,13 @@ class CLI:
         """Function that set a direction in labyrinth"""
 
         direction = input("Select direction 'Z, Q, S or D' : ").upper()
-        if direction not in ['Z', 'Q', 'S', 'D']:
-            print("Please enter a valid direction")
+        if direction == "X":
             return None
-        else:
-            return self.DIRECTIONS[direction]
+        elif direction in ['Z', 'Q', 'S', 'D']:
+            return list(self.DIRECTIONS[direction])
+
+        print("Please enter a valid direction")
+        return self.get_direction()
+
+
+

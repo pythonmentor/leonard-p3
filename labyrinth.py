@@ -1,5 +1,5 @@
 import random as r
-
+import time
 from constants import TOOLS
 
 
@@ -12,78 +12,93 @@ class Labyrinth:
     def __init__(self, path):
         """Function that initializes a labyrinth"""
 
-        self.lab = []
+        self.lablist = []
         with open(path) as file:
             for line in file:
                 result = line.replace('/', ' ')
                 result = result.replace('\n', '')
                 result = list(result)
-                self.lab.append(result)
+                self.lablist.append(result)
 
     def get_random_position(self):
         """Function that gets a random empty cell from a row in column index in labyrinth"""
 
         possible_positions = []
-        for x, line in enumerate(self.lab):
+        for x, line in enumerate(self.lablist):
             for y, element in enumerate(line):
                 if element == ' ':
                     possible_positions.append((x, y))
         return r.choice(possible_positions)
 
-    def set_character_position(self, character): #line
+    def set_character_position(self, character):
         """Function that sets a random position in a random empty cell
         for a given line"""
 
         x, y = character.position
-        self.lab[x][y] = character.name
+        self.lablist[x][y] = character.name
 
     def __len__(self):
         """Function that returns the number of lines contained in labyrinth"""
 
-        return len(self.lab)
+        return len(self.lablist)
+
+    def get_size(self):
+        return len(self.lablist[0]), len(self.lablist)
 
     def set_tool_positions(self, tools):
         """Function that sets tools random positions"""
 
         for tool in tools:
             x, y = self.get_random_position()
-            self.lab[x][y] = tool
+            self.lablist[x][y] = tool
+
+    def get_new_position(self, macgyver, direction):
+        position = macgyver.position
+        y, x = position
+        if direction == 'UP':
+            return y - 1, x
+        elif direction == 'DOWN':
+            return y + 1, x
+        elif direction == 'LEFT':
+            return y, x - 1
+        elif direction == 'RIGHT':
+            return y, x + 1
+        else:
+            return y, x
 
     def move_macgyver(self, macgyver, guardian, direction):
         """Function that allow macgyver to move in the labyrinth,
-        accordinf to walls, guardian and tools positions"""
+        according to walls, guardian and tools positions"""
 
-        position = macgyver.position
-        x, y = position
-        if direction == 'UP':
-            next_position = (x - 1, y)
-        elif direction == 'DOWN':
-            next_position = (x + 1, y)
-        elif direction == 'LEFT':
-            next_position = (x, y - 1)
-        elif direction == 'RIGHT':
-            next_position = (x, y + 1)
-        else:
-            return True
-
-        x2, y2 = next_position
-        element = self.lab[x2][y2]
+        y, x = macgyver.position
+        new_y, new_x = self.get_new_position(macgyver, direction)
+        element = self.lablist[new_y][new_x]
         if element == ' ':
-            macgyver.position = next_position
-            self.lab[x2][y2] = macgyver.name
-            self.lab[x][y] = ' '
+            self.lablist[new_y][new_x] = macgyver.name
+            self.lablist[y][x] = ' '
+            macgyver.position = (new_y, new_x)
+            return {'event': 'CONTINUE'}
+        elif element == '#':
+            print("Mac Gyver cannot go through walls!".upper())
+            return {'event': 'NO_MOVE'}
         elif element in TOOLS:
-            tool = self.lab[x2][y2]
+            tool = self.lablist[new_y][new_x]
             macgyver.add_tool(tool)
-            macgyver.position = next_position
-            self.lab[x2][y2] = macgyver.name
-            self.lab[x][y] = ' '
+            macgyver.position = (new_y, new_x)
+            self.lablist[new_y][new_x] = macgyver.name
+            self.lablist[y][x] = ' '
+            return {'event': 'ADD_TOOL'}
         elif element == guardian.name:
             if len(macgyver.tools) == len(TOOLS):
-                print("Congratulations, you win!")
+                print("Congratulation, you win!".upper())
+                return {'event': 'WIN'}
             else:
-                print("Sorry, but you died!")
-            return False
-        elif element == '#':
-            print("Mac Gyver cannot go through walls!")
-        return True
+                print("Sorry, but you died!".upper())
+                return {'event': 'LOSE'}
+
+
+            # print("If you'd like to play again, please restart the game\n"
+            #       "Game closing in 5 sec")
+            # time.sleep(5)
+            # exit()
+

@@ -1,36 +1,48 @@
-from cli import CLI
 from labyrinth import *
 from character import *
-from constants import *
+from constants import TOOLS
+from cli import CLI
+from pygame_ import *
 
 
 class Main:
     """Class that defines game logic"""
 
     def __init__(self):
+        """Class constructor"""
+
         self.lab = Labyrinth('map.txt')
-        self.macgyver = Character('M', 1, 3)
-        self.guardian = Character('G', 13, 13)
-        self.view = CLI()
-        self.lab.set_character_position(self.macgyver)
-        self.lab.set_character_position(self.guardian)
-
+        macgyver = Character('M', 1, 3)
+        guardian = Character('G', 13, 13)
+        self.lab.set_character_position(macgyver)
+        self.lab.set_character_position(guardian)
         self.lab.set_tool_positions(TOOLS)
-        self.is_running = True
 
-        self.view.display_lab(self.lab.lab)
+        view = Pygame(*self.lab.get_size())
+        view.display_lab(self.lab.lablist)
 
-        while self.is_running:
-            direction = self.view.get_direction()
-            if direction is None:
-                continue
-            move = self.lab.move_macgyver(self.macgyver,
-                                          self.guardian,
-                                          direction)
-            if not move:
-                self.is_running = False
-            else:
-                self.view.display_lab(self.lab.lab)
+        while True:
+            direction = view.get_direction()
+
+            if direction is None:  # exit key pressed
+                exit()
+
+            for d in direction:
+                move = self.lab.move_macgyver(macgyver,
+                                              guardian,
+                                              d)
+                if move['event'] in ['CONTINUE', 'ADD_TOOL']:
+                    view.display_lab(self.lab.lablist)
+                elif move['event'] == 'NO_MOVE':
+                    continue
+                elif move['event'] == 'WIN':
+                    view.win()
+                    time.sleep(5)
+                    exit()
+                elif move['event'] == 'LOSE':
+                    view.lose()
+                    time.sleep(5)
+                    exit()
 
 
 if __name__ == '__main__':
