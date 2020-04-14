@@ -1,5 +1,4 @@
 import random as r
-import time
 from constants import TOOLS
 
 
@@ -15,6 +14,7 @@ class Labyrinth:
         self.lablist = []
         with open(path) as file:
             for line in file:
+                # The '/' allows to see free paths more clearly in 'map.txt'
                 result = line.replace('/', ' ')
                 result = result.replace('\n', '')
                 result = list(result)
@@ -43,6 +43,7 @@ class Labyrinth:
         return len(self.lablist)
 
     def get_size(self):
+        """Function that returns labyrinth's size in a tuple (number of lines, number of columns)"""
         return len(self.lablist[0]), len(self.lablist)
 
     def set_tool_positions(self, tools):
@@ -53,6 +54,8 @@ class Labyrinth:
             self.lablist[x][y] = tool
 
     def get_new_position(self, macgyver, direction):
+        """Function that gets Mac Gyver's next position"""
+
         position = macgyver.position
         y, x = position
         if direction == 'UP':
@@ -67,7 +70,7 @@ class Labyrinth:
             return y, x
 
     def move_macgyver(self, macgyver, guardian, direction):
-        """Function that allow macgyver to move in the labyrinth,
+        """Function that allows macgyver to move in the labyrinth,
         according to walls, guardian and tools positions"""
 
         y, x = macgyver.position
@@ -78,7 +81,7 @@ class Labyrinth:
             self.lablist[y][x] = ' '
             macgyver.position = (new_y, new_x)
             return {'event': 'CONTINUE'}
-        elif element == '#':
+        elif element == '#' or (y, x) == (new_y, new_x):
             print("Mac Gyver cannot go through walls!".upper())
             return {'event': 'NO_MOVE'}
         elif element in TOOLS:
@@ -90,15 +93,6 @@ class Labyrinth:
             return {'event': 'ADD_TOOL'}
         elif element == guardian.name:
             if len(macgyver.tools) == len(TOOLS):
-                print("Congratulation, you win!".upper())
                 return {'event': 'WIN'}
             else:
-                print("Sorry, but you died!".upper())
                 return {'event': 'LOSE'}
-
-
-            # print("If you'd like to play again, please restart the game\n"
-            #       "Game closing in 5 sec")
-            # time.sleep(5)
-            # exit()
-

@@ -1,16 +1,18 @@
 import os
 import pygame
-from pygame.locals import *
+
 
 class Pygame:
-    """Class that defines Pygame initialization """
-    DIRECTIONS = {K_UP: 'UP',
-                  K_DOWN: 'DOWN',
-                  K_LEFT: 'LEFT',
-                  K_RIGHT: 'RIGHT'}
+    """Class that defines Pygame initialization and displays labyrinth """
 
-    def resource_path(self, file):
+    DIRECTIONS = {pygame.K_UP: 'UP',
+                  pygame.K_DOWN: 'DOWN',
+                  pygame.K_LEFT: 'LEFT',
+                  pygame.K_RIGHT: 'RIGHT'}
+
+    def _resource_path(self, file):
         """Function to access resources"""
+
         return os.path.join('resource', file)
 
     def __init__(self, lines, columns):
@@ -21,13 +23,13 @@ class Pygame:
         self.screen_surface = pygame.display.set_mode(self.window_size)
         self.cambria_font = pygame.font.SysFont('Cambria', 30)
 
-        self.floor = pygame.image.load(self.resource_path('floor.png')).convert_alpha()
-        self.wall = pygame.image.load(self.resource_path('wall.png')).convert_alpha()
-        self.needle = pygame.image.load(self.resource_path('needle.png')).convert_alpha()
-        self.tube = pygame.image.load(self.resource_path('tube.png')).convert_alpha()
-        self.ether = pygame.image.load(self.resource_path('ether.png')).convert_alpha()
-        self.macgyver = pygame.image.load(self.resource_path('MacGyver.png')).convert_alpha()
-        self.guardian = pygame.image.load(self.resource_path('Gardien.png')).convert_alpha()
+        self.floor = pygame.image.load(self._resource_path('floor.png')).convert_alpha()
+        self.wall = pygame.image.load(self._resource_path('wall.png')).convert_alpha()
+        self.needle = pygame.image.load(self._resource_path('needle.png')).convert_alpha()
+        self.tube = pygame.image.load(self._resource_path('tube.png')).convert_alpha()
+        self.ether = pygame.image.load(self._resource_path('ether.png')).convert_alpha()
+        self.macgyver = pygame.image.load(self._resource_path('MacGyver.png')).convert_alpha()
+        self.guardian = pygame.image.load(self._resource_path('Gardien.png')).convert_alpha()
 
     def display_lab(self, lab):
         """Function that displays labyrinth and its characters and objects"""
@@ -36,38 +38,44 @@ class Pygame:
 
         for x, line in enumerate(lab):
             for y, element in enumerate(line):
-                if element == '#':
+                if element == '#':      # If element is a wall
                     self.screen_surface.blit(self.wall, (y * 20, x * 20))
-                elif element == ' ':
+                elif element == ' ':    # If element is a free path
                     self.screen_surface.blit(self.floor, (y * 20, x * 20))
-                elif element == 'M':
-                    self.screen_surface.blit(self.floor, (y * 20, x * 20))
+                elif element == 'M':    # If element is Mac Gyver
+                    self.screen_surface.blit(self.floor, (y * 20, x * 20))  #
                     self.screen_surface.blit(self.macgyver, (y * 20, x * 20))
-                elif element == 'N':
+                elif element == 'N':    # If element is needle tool
                     self.screen_surface.blit(self.needle, (y * 20, x * 20))
-                elif element == 'T':
+                elif element == 'T':    # If element is tube tool
                     self.screen_surface.blit(self.tube, (y * 20, x * 20))
-                elif element == 'E':
+                elif element == 'E':    # If element is ether tool
                     self.screen_surface.blit(self.ether, (y * 20, x * 20))
 
         pygame.display.flip()
 
     def win(self):
+        """Function that displays a 'win' message"""
+
         win_text = self.cambria_font.render("Congratulation, you win!", True, (0, 255, 0))
         self.screen_surface.blit(win_text, (150, 150))
         pygame.display.flip()
 
     def lose(self):
+        """Function that displays a 'lose' message """
+
         lose_text = self.cambria_font.render("Sorry, but you died!", True, (255, 0, 0))
         self.screen_surface.blit(lose_text, (150, 150))
         pygame.display.flip()
 
     def get_direction(self):
+        """Function that set a direction in labyrinth"""
+
         moves = []
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 return None
-            elif event.type == KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 if event.key in self.DIRECTIONS:
                     moves.append(self.DIRECTIONS[event.key])
         return moves

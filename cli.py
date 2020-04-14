@@ -1,7 +1,3 @@
-from labyrinth import *
-from constants import TOOLS
-
-
 class CLI:
     """Class that defines CLI init"""
 
@@ -9,6 +5,9 @@ class CLI:
                   'Q': 'LEFT',
                   'S': 'DOWN',
                   'D': 'RIGHT'}
+
+    def __init__(self, lines, columns):
+        pass
 
     def display_lab(self, lab):
         """Function that displays labyrinth"""
@@ -20,6 +19,14 @@ class CLI:
             # r = map(lambda x: ''.join(x), val)
             # r = '\n'.join(r)
 
+    def win(self):
+        """Function that returns a 'win' message"""
+        return "Congratulation, you win!"
+
+    def lose(self):
+        """Function that returns a 'lose' message"""
+        return "Sorry but you died!"
+
     def get_direction(self):
         """Function that set a direction in labyrinth"""
 
@@ -27,10 +34,7 @@ class CLI:
         if direction == "X":
             return None
         elif direction in ['Z', 'Q', 'S', 'D']:
-            return list(self.DIRECTIONS[direction])
+            return [self.DIRECTIONS[direction]]
 
         print("Please enter a valid direction")
         return self.get_direction()
-
-
-
