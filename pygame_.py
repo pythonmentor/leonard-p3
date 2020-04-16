@@ -1,3 +1,6 @@
+""" -tc- Ajouter une docstring."""
+
+# -tc- Attention au respect de la PEP8 dans les imports
 import os
 import pygame
 
@@ -59,14 +62,14 @@ class Pygame:
 
         win_text = self.cambria_font.render("Congratulation, you win!", True, (0, 255, 0))
         self.screen_surface.blit(win_text, (150, 150))
-        pygame.display.flip()
+        pygame.display.flip() # -tc- ne faire qu'un seul flip par boucle dans la boucle principale
 
     def lose(self):
         """Function that displays a 'lose' message """
 
         lose_text = self.cambria_font.render("Sorry, but you died!", True, (255, 0, 0))
         self.screen_surface.blit(lose_text, (150, 150))
-        pygame.display.flip()
+        pygame.display.flip()  # -tc- ne faire qu'un seul flip par boucle dans la boucle principale
 
     def get_direction(self):
         """Function that set a direction in labyrinth"""
