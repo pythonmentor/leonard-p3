@@ -1,3 +1,5 @@
+""" -tc- Ajouter une docstring."""
+
 class CLI:
     """Class that defines CLI init"""
 
@@ -6,7 +8,9 @@ class CLI:
                   'S': 'DOWN',
                   'D': 'RIGHT'}
 
+    # -tc- si la méthode d'initialisation ne fait rien, ne pas la mettre
     def __init__(self, lines, columns):
+        """ -tc- Ajouter une docstring."""
         pass
 
     def display_lab(self, lab):
