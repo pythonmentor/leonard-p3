@@ -26,6 +26,8 @@ class Pygame:
         self.screen_surface = pygame.display.set_mode(self.window_size)
         self.cambria_font = pygame.font.SysFont('Cambria', 30)
 
+        # -tc- utiliser des sprites pour les objets, mac et le gardien me semblerait plus approprié dans un
+        # -tc- design objet et simplifierais drastiquement votre code d'interface
         self.floor = pygame.image.load(self._resource_path('floor.png')).convert_alpha()
         self.wall = pygame.image.load(self._resource_path('wall.png')).convert_alpha()
         self.needle = pygame.image.load(self._resource_path('needle.png')).convert_alpha()
@@ -62,14 +64,14 @@ class Pygame:
 
         win_text = self.cambria_font.render("Congratulation, you win!", True, (0, 255, 0))
         self.screen_surface.blit(win_text, (150, 150))
-        pygame.display.flip() # -tc- ne faire qu'un seul flip par boucle dans la boucle principale
+        pygame.display.flip()
 
     def lose(self):
         """Function that displays a 'lose' message """
 
         lose_text = self.cambria_font.render("Sorry, but you died!", True, (255, 0, 0))
         self.screen_surface.blit(lose_text, (150, 150))
-        pygame.display.flip()  # -tc- ne faire qu'un seul flip par boucle dans la boucle principale
+        pygame.display.flip()
 
     def get_direction(self):
         """Function that set a direction in labyrinth"""
