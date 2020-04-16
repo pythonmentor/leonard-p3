@@ -1,3 +1,4 @@
+# -tc- attention à la PEP8 dans les imports
 import random as r
 from constants import TOOLS
 
