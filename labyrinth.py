@@ -56,6 +56,8 @@ class Labyrinth:
     def get_new_position(self, macgyver, direction):
         """Function that gets Mac Gyver's next position"""
 
+        # -tc- On voudrait normalement séparer l'interface utilisateur de la logique du jeu. La classe Labyrinthe ne devrait
+        # -tc- idéalement pas dépendre de pygame
         position = macgyver.position
         y, x = position
         if direction == 'UP':
@@ -69,6 +71,9 @@ class Labyrinth:
         else:
             return y, x
 
+    # -tc- Dans une logique objet, si c'est macgyver qui se déplacer, c'est lui que devrait avoir une 
+    # -tc- méthode de déplacement. Perspective d'amélioration: utiliser la liste construite dans get_random_position pour 
+    # -tc- les déplacement et la méthode de déplacement se simplifiera beaucoup
     def move_macgyver(self, macgyver, guardian, direction):
         """Function that allows macgyver to move in the labyrinth,
         according to walls, guardian and tools positions"""
