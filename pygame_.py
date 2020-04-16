@@ -62,9 +62,16 @@ class Pygame:
     def win(self):
         """Function that displays a 'win' message"""
 
+        # -tc- indiquer Press any key to quit
         win_text = self.cambria_font.render("Congratulation, you win!", True, (0, 255, 0))
         self.screen_surface.blit(win_text, (150, 150))
         pygame.display.flip()
+        
+        # -tc- attendre que l'utilisateur appuie sur un touche pour quitter:
+        # -tc- while True:
+        # -tc-     for event in pygame.event.get():
+        # -tc-         if event.type in (pygame.QUIT, pygame.KEYDOWN):
+        # -tc-             return 
 
     def lose(self):
         """Function that displays a 'lose' message """
